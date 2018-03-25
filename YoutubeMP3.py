@@ -1,6 +1,11 @@
 import sys
-import requests
 from bs4 import BeautifulSoup
+from mutagen.mp3 import MP3, EasyMP3
+from mutagen.id3 import ID3, APIC, error
+from PIL import Image
+import requests
+from io import BytesIO
+import urllib
 
 yt_url = input("Enter Youtube Video URL : ")
 
@@ -54,10 +59,28 @@ try:
 	                sys.stdout.write("\r[%s%s]" % ('=' * done, ' ' * (50-done)) )    
 	                sys.stdout.flush()
 	print("Download Complete!")
-
 except:
 	print("Some error occured, try again...")
 
+#Downloading Album Art
+
+print("Adding Album Art, please wait...")
+
+thumbnail_url = "https://img.youtube.com/vi/" + yt_id + "/0.jpg"
+
+mp3 = EasyMP3(target_path, ID3=ID3)
+mp3.tags.add(
+    APIC(
+        encoding = 3,
+        mime     = 'image/png',
+        type     = 3,
+        desc     = 'cover',
+        data     = urllib.request.urlopen(thumbnail_url).read()
+    )
+)
+mp3.save() 
+
+print("All Done!")
 
 
 
