@@ -6,6 +6,7 @@ from PIL import Image
 import requests
 from io import BytesIO
 import urllib
+import os
 
 yt_url = input("Enter Youtube Video URL : ")
 
@@ -37,9 +38,11 @@ cleaned = cleaned.split("')")[0]
 cleaned = cleaned.split("('")[1]
 
 # Actual File Download Starts Here
-
-# This is the location where file will be saved, change is according to your environment
 dir_path = "/Users/admin/Desktop/"
+
+if(!os.path.exists(dir_path)):
+	dir_path = "/"
+	
 target_path = dir_path + filename + ".mp3"
 final_mp3_url = cleaned
 
