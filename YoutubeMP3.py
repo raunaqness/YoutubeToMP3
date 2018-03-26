@@ -40,7 +40,7 @@ cleaned = cleaned.split("('")[1]
 # Actual File Download Starts Here
 dir_path = "/Users/admin/Desktop/"
 
-if(!os.path.exists(dir_path)):
+if(not os.path.exists(dir_path)):
 	dir_path = "/"
 	
 target_path = dir_path + filename + ".mp3"
