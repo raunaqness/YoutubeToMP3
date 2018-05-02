@@ -46,23 +46,25 @@ if(not os.path.exists(dir_path)):
 target_path = dir_path + filename + ".mp3"
 final_mp3_url = cleaned
 
+print("Final MP3 URL : ", final_mp3_url)
+
 try:
 	with open(target_path, "wb") as f:
-	        print ("Downloading %s" % filename)
-	        response = requests.get(final_mp3_url, stream=True)
-	        total_length = response.headers.get('content-length')
+			print ("Downloading %s" % filename)
+			response = requests.get(final_mp3_url, stream=True)
+			total_length = response.headers.get('content-length')
 
-	        if total_length is None:
-	            f.write(response.content)
-	        else:
-	            dl = 0
-	            total_length = int(total_length)
-	            for data in response.iter_content(chunk_size=4096):
-	                dl += len(data)
-	                f.write(data)
-	                done = int(50 * dl / total_length)
-	                sys.stdout.write("\r[%s%s]" % ('=' * done, ' ' * (50-done)) )    
-	                sys.stdout.flush()
+			if total_length is None:
+				f.write(response.content)
+			else:
+				dl = 0
+				total_length = int(total_length)
+				for data in response.iter_content(chunk_size=4096):
+					dl += len(data)
+					f.write(data)
+					done = int(50 * dl / total_length)
+					sys.stdout.write("\r[%s%s]" % ('=' * done, ' ' * (50-done)) )    
+					sys.stdout.flush()
 	print("Download Complete!")
 except:
 	print("Some error occured, try again...")
@@ -75,13 +77,13 @@ thumbnail_url = "https://img.youtube.com/vi/" + yt_id + "/0.jpg"
 
 mp3 = EasyMP3(target_path, ID3=ID3)
 mp3.tags.add(
-    APIC(
-        encoding = 3,
-        mime     = 'image/png',
-        type     = 3,
-        desc     = 'cover',
-        data     = urllib.request.urlopen(thumbnail_url).read()
-    )
+	APIC(
+		encoding = 3,
+		mime     = 'image/png',
+		type     = 3,
+		desc     = 'cover',
+		data     = urllib.request.urlopen(thumbnail_url).read()
+	)
 )
 mp3.save() 
 
