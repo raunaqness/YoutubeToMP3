@@ -1,5 +1,5 @@
 bs4==0.0.1
-Pillow==4.2.1
+Pillow==8.2.0
 requests==2.18.1
 urllib3==1.21.1
 mutagen==1.39
